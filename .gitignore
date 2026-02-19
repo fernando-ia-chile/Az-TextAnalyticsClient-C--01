@@ -1,0 +1,31 @@
+# Compilados y salida de build
+bin/
+obj/
+
+# Archivos de símbolos de depuración
+*.pdb
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider (JetBrains)
+.idea/
+
+
+# Configuración local de Claude Code
+.claude/
+
+# Archivos de NuGet generados localmente
+*.nupkg
+*.snupkg
+project.lock.json
+packages/
+
+# Archivos de cobertura de pruebas
+*.coverage
+*.coveragexml
+TestResults/
