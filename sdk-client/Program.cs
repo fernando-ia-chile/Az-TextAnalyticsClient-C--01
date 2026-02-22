@@ -6,6 +6,10 @@ using Azure.AI.TextAnalytics;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using Azure.Identity;  //dotnet add package Azure.Identity
+using Azure.Security.KeyVault.Secrets; //dotnet add package Azure.Security.KeyVault.Secrets
+
+
 
 namespace sdk_client
 {
@@ -19,11 +23,18 @@ namespace sdk_client
         {
             try
             {
+
+                var keyVaultUrl = new Uri("https://kv-ai-textanalytics.vault.azure.net/");
+                var client = new SecretClient(vaultUri: keyVaultUrl, credential: new DefaultAzureCredential());
+
+                AISvcKey = client.GetSecret("AIServicesKey").Value.Value;
+                AISvcEndpoint = client.GetSecret("AIServicesEndpoint").Value.Value;
+
                 // Obtener la configuración desde el archivo appsettings.json
-                IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-                IConfigurationRoot configuration = builder.Build();
-                AISvcEndpoint = configuration["AIServicesEndpoint"];
-                AISvcKey = configuration["AIServicesKey"];
+                // IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+                // IConfigurationRoot configuration = builder.Build();
+                // AISvcEndpoint = configuration["AIServicesEndpoint"];
+                // AISvcKey = configuration["AIServicesKey"];
 
                 // Solicitar texto al usuario en un bucle hasta que escriba "quit"
                 string userText = "";
